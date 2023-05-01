@@ -510,21 +510,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 62
+  m_Constraints: 126
   m_CollisionDetection: 1
---- !u!65 &556695339
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 556695326}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 0.07594053, y: 0.16945328, z: 0.1843846}
-  m_Center: {x: -0.020703746, y: -0.7292036, z: -0.010870098}
 --- !u!4 &556695343 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d39462773b697294faf39005d330bd80,
@@ -666,6 +653,20 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
+--- !u!114 &556695349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 556695326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 992ffddaf249c5a41801c779221f6e06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rayCaster: {fileID: 1800917803}
+  clubVelocity: {x: 0, y: 0, z: 0}
 --- !u!1 &700000412
 GameObject:
   m_ObjectHideFlags: 0
@@ -2879,22 +2880,22 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d39462773b697294faf39005d330bd80,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6582276
+      value: 0.664217
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d39462773b697294faf39005d330bd80,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.07907149
+      value: 0.17033951
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d39462773b697294faf39005d330bd80,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.74331087
+      value: -0.72783774
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d39462773b697294faf39005d330bd80,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.08929236
+      value: 0.007249758
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d39462773b697294faf39005d330bd80,
         type: 3}
@@ -2909,11 +2910,16 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d39462773b697294faf39005d330bd80,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -14.2
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d39462773b697294faf39005d330bd80,
         type: 3}
       propertyPath: m_Name
+      value: Club
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d39462773b697294faf39005d330bd80,
+        type: 3}
+      propertyPath: m_TagString
       value: Club
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2971,7 +2977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b1fec4c31f90ab439735ba3726bde5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitForce: 1000
+  forceMultiplier: 5
 --- !u!120 &2089094297
 LineRenderer:
   m_ObjectHideFlags: 0

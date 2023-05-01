@@ -6,11 +6,13 @@ using UnityEngine;
 [RequireComponent (typeof(LineRenderer))]
 public class Ball : MonoBehaviour {
 	[SerializeField]
-	private float hitForce = 1000f;
+	private float forceMultiplier = 5f;
 	private Rigidbody rb;
+	private Club club;
 	// Start is called before the first frame update
 	void Start() {
 		rb = GetComponent<Rigidbody> ();
+		club = GameObject.FindGameObjectWithTag("Club").GetComponent<Club> ();
 	}
 	void Update(){
 
@@ -33,7 +35,7 @@ public class Ball : MonoBehaviour {
 			ContactPoint contact = collision.contacts[0];
 			Vector3 direction = contact.point - transform.position;
 			direction = direction.normalized;
-			rb.AddForce(direction * hitForce);
+			rb.AddForce(direction * club.clubVelocity.magnitude * forceMultiplier);
 		}
 	}
 }
