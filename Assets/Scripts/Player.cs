@@ -33,31 +33,38 @@ public class Player : MonoBehaviour
 		{
 			allowStroke = true;
 			ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-			gameObject.GetComponent<Collider>().enabled = true;
+			gameObject.GetComponent<BoxCollider>().enabled = true;
+			gameObject.GetComponent<MeshCollider>().enabled = true;
+
 		}
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			RestartBallPosition();
 		}
-        angularSpeed = AngularRotationSpeed();
-    }
+		angularSpeed = AngularRotationSpeed();
+	}
 	private float AngularRotationSpeed()
 	{
-        Quaternion rotationChange = transform.rotation * Quaternion.Inverse(prevRotation);
+		Vector3 ballPosition = ball.transform.position;
+		Quaternion rotationChange = transform.rotation * Quaternion.Inverse(prevRotation);
 
-        // Calculate the angular velocity based on the rotation change
-        float angleInDegrees;
-        Vector3 rotationAxis;
-        rotationChange.ToAngleAxis(out angleInDegrees, out rotationAxis);
-        float angularSpeed = angleInDegrees / Time.deltaTime;
+		// Calculate the angular velocity based on the rotation change
+		float angleInDegrees;
+		Vector3 rotationAxis;
+		rotationChange.ToAngleAxis(out angleInDegrees, out rotationAxis);
+		float angularSpeed = angleInDegrees / Time.deltaTime;
 
-        // Update the previous rotation for the next frame
-        prevRotation = transform.rotation;
+		// Calculate the direction of the rotation based on the dot product of the rotation axis and the vector from the club face to the ball
+		Vector3 clubFaceNormal = GetClubFaceNormal(gameObject, ballPosition);
+		float dotProduct = Vector3.Dot(rotationAxis, clubFaceNormal);
+		float direction = Mathf.Sign(dotProduct);
 
-        // Output the calculated angular velocity
-        Debug.Log("Angular velocity: " + angularSpeed);
-		return angularSpeed;
-    }
+		// Update the previous rotation for the next frame
+		prevRotation = transform.rotation;
+
+		return angularSpeed * direction;
+	}
+
 	Vector3 GetClubFaceNormal(GameObject club, Vector3 pointOfImpact)
 	{
 		Mesh clubMesh = club.GetComponent<MeshFilter>().mesh;
@@ -90,8 +97,9 @@ public class Player : MonoBehaviour
 	private void RestartBallPosition()
 	{
 		ball.transform.position = starPosition;
+		ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
 	}
-    float CalculateForceMagnitude(float angle)
+	float CalculateForceMagnitude(float angle)
 	{
 		// Clamp the angle to a maximum of 45 degrees
 		angle = Mathf.Clamp(angle, 0.0f, 45.0f);
@@ -117,10 +125,12 @@ public class Player : MonoBehaviour
 			float angle = Vector3.Angle(clubFaceNormal, -forceDirection);
 			float forceMangnitude = CalculateForceMagnitude(angle);
 			Vector3 rotatedForceVector = Quaternion.Euler(0, 90, 0) * (forceMangnitude * clubFaceNormal);
-			gameObject.GetComponent<Collider>().enabled = false;
-			Vector3 forceVector = rotatedForceVector * Mathf.Abs((angularSpeed > 2) ? angularSpeed / 10 : 2);
-            ballRB.AddForce(forceVector, ForceMode.Acceleration);
-            Debug.DrawRay(ball.transform.position, forceVector, Color.cyan, 1.0f);
+			gameObject.GetComponent<BoxCollider>().enabled = false;
+			gameObject.GetComponent<MeshCollider>().enabled = false;
+			Vector3 forceVector = new Vector3(Mathf.Abs(rotatedForceVector.x), (rotatedForceVector.y < 0) ? 0 : rotatedForceVector.y, Mathf.Abs(rotatedForceVector.z)) *  angularSpeed / 10;
+			ballRB.AddForce(forceVector, ForceMode.Acceleration);
+			Debug.Log(forceVector + " " + angularSpeed);
+			Debug.DrawRay(ball.transform.position, forceVector, Color.cyan, 1.0f);
 		}
 	}
 }
