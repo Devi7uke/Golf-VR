@@ -6,30 +6,15 @@ using UnityEngine;
 [RequireComponent (typeof(LineRenderer))]
 public class Ball : MonoBehaviour {
 	[SerializeField]
-	private float MaxForce;
-	[SerializeField]
-	private float forceModifier = 0.5f;
-	[SerializeField]
-	private float force;
+	private float hitForce = 1000f;
 	private Rigidbody rb;
-	private LineRenderer lineRenderer;
-	private Vector3 start, end;
-	private bool allowShoot = false;
-	private Vector3 direction;
 	// Start is called before the first frame update
 	void Start() {
-		rb = GetComponent<Rigidbody>();
-		lineRenderer = GetComponent<LineRenderer>();
+		rb = GetComponent<Rigidbody> ();
 	}
-
-	// Update is called once per frame
 	void Update(){
-		if (rb.velocity == Vector3.zero){
-			rb.angularVelocity = Vector3.zero;
-		}
-	}
 
-	//Hereeeeeeeeeeeeeeeeeeeeeeeeeeee
+	}
 	private void ResetPosition(){
 
 	}
@@ -44,12 +29,11 @@ public class Ball : MonoBehaviour {
 		}
 	}
 	private void OnCollisionEnter(Collision collision) {
-		if (collision.gameObject.tag == "Club" && allowShoot) {
-			allowShoot = false;
-			direction = start - end;
-			rb.AddForce(direction * force, ForceMode.Impulse);
-			force = 0;
-			start = end = Vector3.zero;
+		if(collision.gameObject.tag == "Club") {
+			ContactPoint contact = collision.contacts[0];
+			Vector3 direction = contact.point - transform.position;
+			direction = direction.normalized;
+			rb.AddForce(direction * hitForce);
 		}
 	}
 }
