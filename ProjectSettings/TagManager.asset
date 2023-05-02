@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ball
   - Club
+  - Course
   layers:
   - Default
   - TransparentFX
