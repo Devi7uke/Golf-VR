@@ -9,16 +9,19 @@ public class Ball : MonoBehaviour {
 	private float forceMultiplier = 5f;
 	private Rigidbody rb;
 	private Club club;
+	private Vector3 startPosition;
 	// Start is called before the first frame update
 	void Start() {
 		rb = GetComponent<Rigidbody> ();
 		club = GameObject.FindGameObjectWithTag("Club").GetComponent<Club> ();
-	}
+		startPosition = transform.position;
+    }
 	void Update(){
 
 	}
 	private void ResetPosition(){
-
+		rb.velocity = Vector3.zero;
+		transform.position = startPosition;
 	}
 	private void NextLevel(){
 
@@ -35,7 +38,8 @@ public class Ball : MonoBehaviour {
 			ContactPoint contact = collision.contacts[0];
 			Vector3 direction = contact.point - transform.position;
 			direction = direction.normalized;
-			rb.AddForce(direction * club.clubVelocity.magnitude * forceMultiplier);
+			rb.AddForce(direction * club.clubVelocity.magnitude * forceMultiplier, ForceMode.Acceleration);
+			Debug.Log(direction * club.clubVelocity.magnitude * forceMultiplier);
 		}
 	}
 }

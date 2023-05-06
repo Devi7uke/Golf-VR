@@ -7,26 +7,34 @@ using UnityEngine;
 public class Club : MonoBehaviour {
 	[SerializeField] private GameObject rayCaster;
 	private GameObject ball;
+	private Vector3 startPosition;
 	private Vector3 previousPosition;
 	private Vector3 predictLineDirection;
 	private Quaternion previousRotation;
+	private Rigidbody rb;
 
 	public Vector3 clubVelocity;
+	public float torque = 100f;
 
 	// Start is called before the first frame update
 	void Start() {
 		previousPosition = transform.position;
 		previousRotation = transform.rotation;
 		ball = GameObject.FindGameObjectWithTag("Ball");
+		rb = GetComponent<Rigidbody>();
 	}
 
 	// Update is called once per frame
 	void Update() {
-		clubVelocity = ClubVelocity();
+        clubVelocity = ClubVelocity();
+        //clubVelocity = rb.angularVelocity;
 		SpeculteDirection();
+		if(Input.GetKeyDown(KeyCode.U)) {
+			rb.AddTorque(Vector3.right * torque);
+		}
 	}
 
-	private Vector3 ClubVelocity() {
+    private Vector3 ClubVelocity() {
 		Quaternion deltaRotation = transform.rotation * Quaternion.Inverse(previousRotation);
 		float angleInDegrees;
 		Vector3 rotationAxis;
