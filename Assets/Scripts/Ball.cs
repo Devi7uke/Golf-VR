@@ -17,7 +17,11 @@ public class Ball : MonoBehaviour {
 		startPosition = transform.position;
     }
 	void Update(){
-
+		if (Input.GetKeyDown(KeyCode.F)) {
+			rb.AddForce(Vector3.forward * 10, ForceMode.Impulse);
+		} else if (Input.GetKeyDown(KeyCode.R)) {
+			ResetPosition();
+		}
 	}
 	private void ResetPosition(){
 		rb.velocity = Vector3.zero;
