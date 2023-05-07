@@ -7,6 +7,12 @@ TagManager:
   - Ball
   - Club
   - Course
+  - Target
+  - SpaceGoal
+  - Ship
+  - XROrigin
+  - TargetZero
+  - Pivot
   layers:
   - Default
   - TransparentFX
