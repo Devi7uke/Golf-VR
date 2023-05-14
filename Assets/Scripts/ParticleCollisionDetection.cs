@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ParticleCollisionDetection : MonoBehaviour {
-	private ParticleSystem particles;  
+	private ParticleSystem particles;
 
 	private void Start() {
 		particles = GetComponent<ParticleSystem>();
