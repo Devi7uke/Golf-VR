@@ -13,6 +13,7 @@ TagManager:
   - XROrigin
   - TargetZero
   - Pivot
+  - GameManager
   layers:
   - Default
   - TransparentFX

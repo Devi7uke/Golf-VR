@@ -9,36 +9,21 @@ public class Ball : MonoBehaviour {
 	private float forceMultiplier = 5f;
 	private Rigidbody rb;
 	private Club club;
-	private Vector3 startPosition;
+	private GameManager gameManager;
 	// Start is called before the first frame update
 	void Start() {
+		gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 		rb = GetComponent<Rigidbody> ();
 		club = GameObject.FindGameObjectWithTag("Club").GetComponent<Club> ();
-		startPosition = transform.position;
     }
-	void Update(){
-		if (Input.GetKeyDown(KeyCode.F)) {
-			rb.AddForce(Vector3.forward * 10, ForceMode.Impulse);
-		} else if (Input.GetKeyDown(KeyCode.R)) {
-			ResetPosition();
-		}
-	}
-	private void ResetPosition(){
-		rb.velocity = Vector3.zero;
-		transform.position = startPosition;
-	}
-	private void NextLevel(){
-
-	}
 	private void OnTriggerEnter(Collider other){
-		if (other.name == "Limits") {
-			ResetPosition();
-		} else if (other.name == "Hole") {
-			NextLevel();
+		if (other.name == "Hole") {
+			gameManager.NextLevel();
 		}
 	}
 	private void OnCollisionEnter(Collision collision) {
 		if(collision.gameObject.tag == "Club") {
+			gameManager.SetPreviousBallPosition();
 			ContactPoint contact = collision.contacts[0];
 			Vector3 direction = contact.point - transform.position;
 			direction = direction.normalized;

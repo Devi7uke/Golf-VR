@@ -28,9 +28,6 @@ public class ShipOrbit : MonoBehaviour {
 			transform.Rotate(Vector3.up, -90f);
 			transform.position = newPosition;
 		}
-		if(Input.GetKeyDown(KeyCode.Space)) {
-			startMovement();
-		}
 	}
 	public void startMovement() {
 		player.SetParent(parentP);
