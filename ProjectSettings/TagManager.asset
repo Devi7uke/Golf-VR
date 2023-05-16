@@ -15,6 +15,14 @@ TagManager:
   - Pivot
   - GameManager
   - ExplosionAreaEffect
+  - BlackHole
+  - PickupShoot
+  - PickupKill
+  - PickupSpeed
+  - PickupClean
+  - PickupPoison
+  - PickupRandom
+  - Hole
   layers:
   - Default
   - TransparentFX

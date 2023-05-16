@@ -6,12 +6,27 @@ using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour {
 	[SerializeField] private List<GameObject> panels;
+	[SerializeField] private List <AudioClip> music;
+
+	private Camera mainCamera;
 	private int level = 1;
 	private string sceneName;
 	private GameObject ball;
 	private Vector3 startBallPosition;
 	private Vector3 previousBallPosition;
+	private bool intro = true;
 	private void Awake() {
+		mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+		if (SceneManager.GetActiveScene().name == "Scenario_3" ) {
+			if (level == 1) {
+				mainCamera.GetComponent<AudioSource>().clip = music[0];
+			}else if (level == 2) {
+				mainCamera.GetComponent<AudioSource>().clip = music[1];
+			}else if (intro) {
+				intro = false;
+				mainCamera.GetComponent<AudioSource>().clip = music[2];
+			}
+		}
 		if (SceneManager.GetActiveScene().name == "MainMenu") {
 			panels[Random.Range(0, panels.Count)].SetActive(true);
 		}

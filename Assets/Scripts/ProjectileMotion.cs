@@ -10,11 +10,13 @@ public class ProjectileMotion : MonoBehaviour {
 	private float initialSpeed = 15;
 	private float distance = 0f;
 	private float launchAngle = 0f;
+	private AudioSource audioSource;
 	private ParticleSystem particles;
 	// Start is called before the first frame update
 	void Start() {
 		particles = GetComponent<ParticleSystem>();
 		target = GameObject.FindGameObjectWithTag("Ball");
+		audioSource = GetComponent<AudioSource>();
 	}
 
 	// Update is called once per frame
