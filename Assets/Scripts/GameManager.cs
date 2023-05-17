@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 public class GameManager : MonoBehaviour {
 	[SerializeField] private List<GameObject> panels;
 	[SerializeField] private List <AudioClip> music;
-
+	[SerializeField] private GameObject start;
 	private Camera mainCamera;
 	private int level = 1;
 	private string sceneName;
@@ -44,6 +44,10 @@ public class GameManager : MonoBehaviour {
 		}
 		else if (Input.GetKeyDown(KeyCode.R)) {
 			ResetPosition();
+		}
+        if (Input.GetKeyDown(KeyCode.Space)){
+			GameObject.FindGameObjectWithTag("XROrigin").transform.parent = start.transform;
+			GameObject.FindGameObjectWithTag("XROrigin").transform.localPosition = new Vector3(0, 0, 0);
 		}
 	}
 	public void Play() {
