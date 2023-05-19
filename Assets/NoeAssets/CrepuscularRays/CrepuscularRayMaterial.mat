@@ -28,8 +28,8 @@ Material:
     m_Floats:
     - _Decay: 1
     - _Density: 1
-    - _Exposure: 0.9
+    - _Exposure: 1
     - _NumSamples: 128
-    - _Weight: 0.12
+    - _Weight: 0.1
     m_Colors: []
   m_BuildTextureStacks: []
