@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.XR.OpenXR.Input;
 
 public class Club : MonoBehaviour {
 	[SerializeField] private GameObject rayCaster;
 	private GameObject ball;
+	[SerializeField]
+	private float maxVelocity = 20f;
 	private Vector3 startPosition;
 	private Vector3 previousPosition;
 	private Vector3 predictLineDirection;
@@ -43,7 +46,16 @@ public class Club : MonoBehaviour {
 		Vector3 linearVelocity = (transform.position - previousPosition) / Time.deltaTime;
 		previousPosition = transform.position;
 		previousRotation = transform.rotation;
-		return new Vector3(linearVelocity.x, angularVelocity, linearVelocity.z);
+		return new Vector3(linearVelocity.x + angularVelocity, linearVelocity.y, linearVelocity.z + angularVelocity);
+	}
+
+	public Vector3 getVelocity() {
+		//Calculate velocity
+		Vector3 velocity = (transform.position - previousPosition) / Time.deltaTime;
+		if (velocity.magnitude > maxVelocity) {
+			velocity = velocity * (maxVelocity / velocity.magnitude);
+		}
+		return velocity;
 	}
 
 	private void SpeculteDirection() {
@@ -52,7 +64,7 @@ public class Club : MonoBehaviour {
 		if (Physics.Raycast(rayCaster.transform.position, rayCaster.transform.forward, out hit, maxHitDistance)) {
 			Debug.DrawRay(rayCaster.transform.position, rayCaster.transform.forward * hit.distance, Color.blue, 0.01f);
 			if (hit.collider.CompareTag("Ball")) {
-				Debug.Log("Raycast collision");
+				//Debug.Log("Raycast collision");
 				predictLineDirection = (clubVelocity + transform.right).normalized / 2;
 				ball.GetComponent<LineRenderer>().SetPosition(1, new Vector3(predictLineDirection.x, 0, predictLineDirection.z));
 			}

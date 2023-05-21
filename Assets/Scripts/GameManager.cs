@@ -37,21 +37,22 @@ public class GameManager : MonoBehaviour {
 			startBallPosition = ball.transform.position;
 			sceneName = SceneManager.GetActiveScene().name;
 		}
+		if(SceneManager.GetActiveScene().name == "Scenario_3") {
+			GameObject.FindGameObjectWithTag("XROrigin").transform.parent = start.transform;
+			GameObject.FindGameObjectWithTag("XROrigin").transform.localPosition = new Vector3(0, 0, 0);
+		}
 	}
 	void Update() {
 		if (Input.GetKeyDown(KeyCode.F)) {
 			ball.GetComponent<Rigidbody>().AddForce(Vector3.forward * 10, ForceMode.Impulse);
 		}
-		else if (Input.GetKeyDown(KeyCode.R)) {
+		else if (Input.GetKeyDown(KeyCode.R) && SceneManager.GetActiveScene().name == "Scenario_3") {
 			ResetPosition();
-		}
-        if (Input.GetKeyDown(KeyCode.Space)){
-			GameObject.FindGameObjectWithTag("XROrigin").transform.parent = start.transform;
-			GameObject.FindGameObjectWithTag("XROrigin").transform.localPosition = new Vector3(0, 0, 0);
 		}
 	}
 	public void Play() {
-		SceneManager.LoadScene("Scenario_1");
+		LoadScene.Instance.Load_Scene("Scenario_3");
+		//SceneManager.LoadScene("Scenario_1");
 	}
 	public void Quit() {
 		#if UNITY_EDITOR

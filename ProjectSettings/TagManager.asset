@@ -23,6 +23,8 @@ TagManager:
   - PickupPoison
   - PickupRandom
   - Hole
+  - ClubHead
+  - BallAreaEffect
   layers:
   - Default
   - TransparentFX
@@ -30,7 +32,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Buttons
   - 
   - 
   - 

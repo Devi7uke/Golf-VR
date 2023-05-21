@@ -26,6 +26,12 @@ public class AlienEnemyOne: MonoBehaviour {
 			animator.SetInteger("Shot", Random.Range(1, 6));
 			StartCoroutine("CoolDown");
 		}
+		transform.LookAt(ball.transform);
+		RotateGuns();
+	}
+	private void RotateGuns() {
+		LeftGun.transform.LookAt(ball.transform);
+		RightGun.transform.LookAt(ball.transform);
 	}
 	IEnumerator InitalWaitTime() {
 		yield return new WaitForSeconds(waitTime);
@@ -38,10 +44,12 @@ public class AlienEnemyOne: MonoBehaviour {
 		LeftGun.transform.GetChild(0).GetComponent<AudioSource>().pitch = 2;
 		LeftGun.transform.GetChild(0).GetComponent<AudioSource>().PlayOneShot(launch[Random.Range(0, launch.Count)]);
 		audioSource.PlayOneShot(roars[Random.Range(0, roars.Count)]);
-		yield return new WaitForSeconds(time/5.0f);
-		RightGun.transform.GetChild(0).GetComponent<AudioSource>().pitch = 2;
-		RightGun.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
-		RightGun.transform.GetChild(0).GetComponent<AudioSource>().PlayOneShot(launch[Random.Range(0, launch.Count)]);
+		yield return new WaitForSeconds(time / 5.0f);
+		if (Vector3.Distance(transform.position, ball.transform.position) < distanceDetection) {
+			RightGun.transform.GetChild(0).GetComponent<AudioSource>().pitch = 2;
+			RightGun.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
+			RightGun.transform.GetChild(0).GetComponent<AudioSource>().PlayOneShot(launch[Random.Range(0, launch.Count)]);
+		}
 		animator.SetInteger("Shot", 0);
 		yield return new WaitForSeconds(time);
 		enableShot = true;

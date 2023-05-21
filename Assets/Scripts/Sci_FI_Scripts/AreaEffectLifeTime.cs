@@ -24,8 +24,8 @@ public class AreaEffectLifeTime : MonoBehaviour{
 		Destroy(gameObject);
 	}
 	private void OnTriggerEnter(Collider other) {
-		if (other.tag == "Ball") {
-			ball.GetComponent<Rigidbody>().AddForce(2 * new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)), ForceMode.Impulse);
+		if (other.tag == "BallAreaEffect") {
+			ball.GetComponent<Rigidbody>().AddForce(0, Random.Range(0f, 5f), 0, ForceMode.Impulse);
 		}
 	}
 }
