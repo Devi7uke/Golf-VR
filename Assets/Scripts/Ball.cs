@@ -33,10 +33,11 @@ public class Ball : MonoBehaviour {
 		club = GameObject.FindGameObjectWithTag("Club").GetComponent<Club>();
     }
 	private void OnTriggerEnter(Collider other){
-		if(other.tag == "ClubHead" && ballState != BallState.Freezed) {
-			rb.velocity = club.getVelocity() * velocityMultiplier;
+		if(other.tag == "Club" && ballState != BallState.Freezed && allowMovement) {
+			StartCoroutine("TriggerCoolDown");
+			rb.velocity = club.getVelocity().normalized * velocityMultiplier;
 			audioSource.PlayOneShot(audioClips[1]);
-			Debug.Log("Trigger Entered!!! : " + club.clubVelocity.normalized);
+			Debug.Log("Trigger Entered!!! : " + club.clubVelocity.normalized * velocityMultiplier);
 		}
 		if (other.name == "Hole") {
 			gameManager.NextLevel();
@@ -98,6 +99,11 @@ public class Ball : MonoBehaviour {
 			Debug.Log(direction * club.clubVelocity.magnitude * forceMultiplier);
 		}
 	}*/
+	IEnumerator TriggerCoolDown() {
+		allowMovement = false;
+		yield return new WaitForSeconds(1.0f);
+		allowMovement = true;
+    }
 	IEnumerator PoisonedEffectCoolDown(float time) {
 		effects[5].Play();
 		yield return new WaitForSeconds(time);

@@ -55,7 +55,7 @@ public class Club : MonoBehaviour {
 		if (velocity.magnitude > maxVelocity) {
 			velocity = velocity * (maxVelocity / velocity.magnitude);
 		}
-		return velocity;
+		return new Vector3(velocity.x, 0, velocity.z);
 	}
 
 	private void SpeculteDirection() {
