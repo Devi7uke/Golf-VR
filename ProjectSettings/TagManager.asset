@@ -18,6 +18,8 @@ TagManager:
   - Piso
   - Jumpscare
   - Hoyo
+  - Escalera
+  - Pentagrama
   layers:
   - Default
   - TransparentFX

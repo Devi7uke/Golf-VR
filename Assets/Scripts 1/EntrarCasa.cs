@@ -6,14 +6,19 @@ public class EntrarCasa : MonoBehaviour
 {
     // Start is called before the first frame update
     private IEnumerator coroutine;
-    public GameObject xr_p;
+    private GameObject xr_p;
     public GameObject penta;
     ParticleSystem portal;
     public GameObject video;
+    private GameObject escalera;
+    private GameObject pentagrama;
 
     void Start()
     {
         portal = penta.GetComponent<ParticleSystem>();
+        escalera = GameObject.FindGameObjectWithTag("Escalera");
+        pentagrama = GameObject.FindGameObjectWithTag("Pentagrama");
+        xr_p = GameObject.FindGameObjectWithTag("XROrigin");
     }
 
     // Update is called once per frame
@@ -26,11 +31,12 @@ public class EntrarCasa : MonoBehaviour
     {
         Debug.Log("MoviendoJugador");
         yield return new  WaitForSeconds(waitTime);
-        xr_p.transform.position = new Vector3(-0.5f, 5.0f, -23.0f);
-        xr_p.transform.rotation = Quaternion.Euler(0, 270, 0);
+        xr_p.transform.SetParent(escalera.transform);
+        xr_p.transform.localPosition = new Vector3(0f, 0f, 0f);
         Debug.Log("MoviendoPelota");
         yield return new  WaitForSeconds(3.0f);
-        transform.position = new Vector3(-2.75f, 6.0f, -24.0f);
+        gameObject.transform.SetParent(pentagrama.transform);
+        gameObject.transform.localPosition = new Vector3(-0.5f, 0f, 0f);
         portal.Play();
         yield return new  WaitForSeconds(5.0f);
         portal.Stop();
