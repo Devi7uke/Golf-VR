@@ -30,6 +30,6 @@ Material:
     - _Density: 1
     - _Exposure: 1
     - _NumSamples: 128
-    - _Weight: 0.09
+    - _Weight: 0.15
     m_Colors: []
   m_BuildTextureStacks: []
