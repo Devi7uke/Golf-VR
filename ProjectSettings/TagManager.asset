@@ -13,6 +13,11 @@ TagManager:
   - XROrigin
   - TargetZero
   - Pivot
+  - Fuente
+  - Portal
+  - Piso
+  - Jumpscare
+  - Hoyo
   layers:
   - Default
   - TransparentFX
