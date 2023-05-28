@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.XR.CoreUtils;
+using UnityEngine.InputSystem.XR;
+using UnityEngine.Rendering.VirtualTexturing;
+using UnityEngine.Assertions;
 
 public class EntrarCasa : MonoBehaviour
 {
@@ -33,10 +37,11 @@ public class EntrarCasa : MonoBehaviour
         yield return new  WaitForSeconds(waitTime);
         xr_p.transform.SetParent(escalera.transform);
         xr_p.transform.localPosition = new Vector3(0f, 0f, 0f);
+        Debug.Log(xr_p.GetComponent<XROrigin>().MoveCameraToWorldLocation(escalera.transform.position));
         Debug.Log("MoviendoPelota");
         yield return new  WaitForSeconds(3.0f);
         gameObject.transform.SetParent(pentagrama.transform);
-        gameObject.transform.localPosition = new Vector3(-0.5f, 0f, 0f);
+        gameObject.transform.localPosition = new Vector3(0f, 1f, 1f);
         portal.Play();
         yield return new  WaitForSeconds(5.0f);
         portal.Stop();
@@ -47,16 +52,18 @@ public class EntrarCasa : MonoBehaviour
 
         yield return new  WaitForSeconds(3.0f);
         video.SetActive(true);
-        xr_p.transform.position = new Vector3(-0.5f, 5.0f, -23.0f);
-        xr_p.transform.rotation = Quaternion.Euler(0, 270, 0);
+        xr_p.transform.SetParent(escalera.transform);
+        xr_p.transform.localPosition = new Vector3(0f, 0f, 0f);
+        Debug.Log(xr_p.GetComponent<XROrigin>().MoveCameraToWorldLocation(escalera.transform.position));
         transform.position = new Vector3(-1.31f, 4.17f, -23.18f);
     }
 
     private IEnumerator OutOfBounds(float waitTime)
     {
         yield return new  WaitForSeconds(2.0f);
-        xr_p.transform.position = new Vector3(-0.5f, 5.0f, -23.0f);
-        xr_p.transform.rotation = Quaternion.Euler(0, 270, 0);
+        xr_p.transform.SetParent(escalera.transform);
+        xr_p.transform.localPosition = new Vector3(0f, 0f, 0f);
+        Debug.Log(xr_p.GetComponent<XROrigin>().MoveCameraToWorldLocation(escalera.transform.position));
         gameObject.transform.position = new Vector3(-1.31f, 4.17f, -23.18f);
     }
 
