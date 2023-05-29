@@ -13,20 +13,13 @@ TagManager:
   - XROrigin
   - TargetZero
   - Pivot
-  - GameManager
-  - ExplosionAreaEffect
-  - BlackHole
-  - PickupShoot
-  - PickupKill
-  - PickupSpeed
-  - PickupClean
-  - PickupPoison
-  - PickupRandom
-  - Hole
-  - ClubHead
-  - BallAreaEffect
-  - Menu
-  - Levels
+  - Fuente
+  - Portal
+  - Piso
+  - Jumpscare
+  - Hoyo
+  - Escalera
+  - Pentagrama
   layers:
   - Default
   - TransparentFX
@@ -34,7 +27,7 @@ TagManager:
   - 
   - Water
   - UI
-  - Buttons
+  - 
   - 
   - 
   - 
