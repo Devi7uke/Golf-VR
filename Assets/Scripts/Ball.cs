@@ -5,7 +5,6 @@ using UnityEngine;
 using static Ball;
 
 [RequireComponent (typeof (Rigidbody))]
-[RequireComponent (typeof(LineRenderer))]
 public class Ball : MonoBehaviour {
 	[SerializeField] private float velocityMultiplier = 1.5f;
 	[SerializeField] private PhysicMaterial physicMaterial;
@@ -17,6 +16,9 @@ public class Ball : MonoBehaviour {
 	private Club club;
 	private GameManager gameManager;
 	private bool allowMovement = true;
+	private bool onCourse = true;
+	public Vector3 previousPos;
+	public Vector3 initialPos;
 	public enum BallState {
 		Normal,
 		Poisoned,
@@ -27,6 +29,8 @@ public class Ball : MonoBehaviour {
 		Freezed
 	}
 	void Start() {
+		previousPos = transform.position;
+		initialPos = transform.position;
 		gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 		rb = GetComponent<Rigidbody> ();
 		//audioSource.GetComponent<AudioSource>();
@@ -85,20 +89,31 @@ public class Ball : MonoBehaviour {
 			ballState = BallState.Normal;
 		}
 	}
+	private void OnCollisionExit(Collision collision){
+		if (collision.gameObject.tag == "Club"){
+			rb.velocity = rb.velocity * velocityMultiplier;
+			Debug.Log("Ball Velocity: "+ rb.velocity);
+		}else if(collision.gameObject.tag == "Course" && onCourse){
+			onCourse = false;
+			Debug.Log("OutOfTheCourse");
+			StartCoroutine("ResetCoolDown");
+		}
+	}
+	private void OnCollisionEnter(Collision collision){
+		if (collision.gameObject.tag == "Club"){
+			previousPos = transform.position;
+		}else if(collision.gameObject.tag == "Course"){
+			onCourse = true;
+		}
+	}
+	private void OnCollisionStay(Collision collision){
+		if(collision.gameObject.tag == "Course"){
+			onCourse = true;
+		}
+	}
 	public void ApplyState(BallState state) {
 		ballState = state;
 	}
-	/*
-	private void OnCollisionEnter(Collision collision) {
-		if(collision.gameObject.tag == "Club" && allowMovement) {
-			gameManager.SetPreviousBallPosition();
-			ContactPoint contact = collision.contacts[0];
-			Vector3 direction = contact.point - transform.position;
-			direction = direction.normalized;
-			rb.AddForce(new Vector3(direction.x, 0, direction.z) * club.clubVelocity.magnitude * forceMultiplier, ForceMode.Acceleration);
-			Debug.Log(direction * club.clubVelocity.magnitude * forceMultiplier);
-		}
-	}*/
 	IEnumerator TriggerCoolDown() {
 		allowMovement = false;
 		yield return new WaitForSeconds(1.0f);
@@ -151,5 +166,27 @@ public class Ball : MonoBehaviour {
 		other.gameObject.SetActive(true);
 		ballState = BallState.Normal;
 		velocityMultiplier /= 2;
+	}
+	IEnumerator StopWaitTime(){
+		yield return new WaitForSeconds(2f);
+		rb.velocity = Vector3.zero;
+		rb.angularVelocity = Vector3.zero;
+	}
+	IEnumerator ResetCoolDown(){
+		bool var1 = false;
+		bool var2 = false;
+		bool var3 = false;
+		yield return new WaitForSeconds(1f);
+		var1 = !onCourse;
+		yield return new WaitForSeconds(1f);
+		var2 = !onCourse;
+		yield return new WaitForSeconds(1f);
+		var3 = !onCourse;
+		yield return new WaitForSeconds(2f);
+		if(!onCourse && var1 && var2 && var3){
+			gameManager.PreviousBallPosition();
+			rb.velocity = Vector3.zero;
+			rb.angularVelocity = Vector3.zero;
+		}
 	}
 }

@@ -25,6 +25,8 @@ TagManager:
   - Hole
   - ClubHead
   - BallAreaEffect
+  - Menu
+  - Levels
   layers:
   - Default
   - TransparentFX

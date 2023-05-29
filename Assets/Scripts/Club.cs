@@ -31,7 +31,6 @@ public class Club : MonoBehaviour {
 	void Update() {
         clubVelocity = ClubVelocity();
         //clubVelocity = rb.angularVelocity;
-		SpeculteDirection();
 		if(Input.GetKeyDown(KeyCode.U)) {
 			rb.AddTorque(Vector3.right * torque);
 		}
@@ -56,21 +55,5 @@ public class Club : MonoBehaviour {
 			velocity = velocity * (maxVelocity / velocity.magnitude);
 		}
 		return new Vector3(velocity.x, 0, velocity.z);
-	}
-
-	private void SpeculteDirection() {
-		RaycastHit hit;
-		float maxHitDistance = 1f;
-		if (Physics.Raycast(rayCaster.transform.position, rayCaster.transform.forward, out hit, maxHitDistance)) {
-			Debug.DrawRay(rayCaster.transform.position, rayCaster.transform.forward * hit.distance, Color.blue, 0.01f);
-			if (hit.collider.CompareTag("Ball")) {
-				//Debug.Log("Raycast collision");
-				predictLineDirection = (clubVelocity + transform.right).normalized / 2;
-				ball.GetComponent<LineRenderer>().SetPosition(1, new Vector3(predictLineDirection.x, 0, predictLineDirection.z));
-			}
-		}
-		else {
-			ball.GetComponent<LineRenderer>().SetPosition(1, Vector3.zero);
-		}
 	}
 }

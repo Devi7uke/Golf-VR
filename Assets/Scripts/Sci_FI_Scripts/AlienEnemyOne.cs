@@ -7,7 +7,7 @@ public class AlienEnemyOne: MonoBehaviour {
 	[SerializeField] private GameObject RightGun;
 	[SerializeField] private float time = 10f;
 	[SerializeField] private float waitTime = 10f;
-	[SerializeField] private float distanceDetection = 15f;
+	public float distanceDetection = 15f;
 	[SerializeField] private List<AudioClip> roars;
 	[SerializeField] private List<AudioClip> launch;
 	private AudioSource audioSource;

@@ -12,6 +12,7 @@ public class ProjectileMotion : MonoBehaviour {
 	private float launchAngle = 0f;
 	private AudioSource audioSource;
 	private ParticleSystem particles;
+	[SerializeField] private AlienEnemyOne alienEnemyOne;
 	// Start is called before the first frame update
 	void Start() {
 		particles = GetComponent<ParticleSystem>();
@@ -24,9 +25,11 @@ public class ProjectileMotion : MonoBehaviour {
 		distance = Vector3.Distance(target.transform.position, transform.position);
 		//float correctionAngle = Mathf.Atan((target.transform.position.y - transform.position.y) / distance) * Mathf.Rad2Deg;
 		//launchAngle = (Mathf.Rad2Deg * Mathf.Asin(gravity * distance / Mathf.Pow(initialSpeed, 2)) / 2)+ correctionAngle;
-		launchAngle = (Mathf.Rad2Deg * Mathf.Asin(gravity * distance / Mathf.Pow(initialSpeed, 2)) / 2);
-		transform.LookAt(target.transform.position);
-		transform.Rotate(-launchAngle, 0, 0);
+		if(distance < alienEnemyOne.distanceDetection){
+			launchAngle = (Mathf.Rad2Deg * Mathf.Asin(gravity * distance / Mathf.Pow(initialSpeed, 2)) / 2);
+			transform.LookAt(target.transform.position);
+			transform.Rotate(-launchAngle, 0, 0);
+		}
 	}
 	void OnParticleCollision(GameObject other) {
 		//Debug.Log("Particle collided with " + other.name);
