@@ -1,11 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.UIElements;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class ShipOrbit : MonoBehaviour {
 	private float speed = 1f;
