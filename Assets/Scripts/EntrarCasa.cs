@@ -16,6 +16,8 @@ public class EntrarCasa : MonoBehaviour
     public GameObject video;
     private GameObject escalera;
     private GameObject pentagrama;
+    private bool isContact = false;
+    private bool auxiliar = false;
 
     void Start()
     {
@@ -42,6 +44,7 @@ public class EntrarCasa : MonoBehaviour
         yield return new  WaitForSeconds(3.0f);
         gameObject.transform.SetParent(pentagrama.transform);
         gameObject.transform.localPosition = new Vector3(0f, 1f, 1f);
+        gameObject.GetComponent<Ball>().previousPos = escalera.transform.position;
         portal.Play();
         yield return new  WaitForSeconds(5.0f);
         portal.Stop();
@@ -80,9 +83,37 @@ public class EntrarCasa : MonoBehaviour
             StartCoroutine(coroutine);
         }else if(other.tag == "Piso"){
             Debug.Log("Salio");
+            //coroutine = OutOfBounds(2.0f);   
+        }
+
+    }
+    private void OnCollisionStay(Collision collision){
+        if (collision.gameObject.tag == "DownStairs"){
+            isContact = true;
+        }
+    }
+    private void OnCollisionExit(Collision collision){
+        if (collision.gameObject.tag == "DownStairs"){
+            isContact = false;
+        }
+    }
+    private void OnCollisionEnter(Collision collision){
+        if (collision.gameObject.tag == "DownStairs" && !auxiliar){
+            StartCoroutine("IsInContact");
+            isContact = true;
+        }
+    }
+    private IEnumerator IsInContact(){
+        yield return new WaitForSeconds(5f);
+        if (isContact){
+            auxiliar = true;
+            Debug.Log("MoviendoJugador");
+            gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            gameObject.GetComponent<Ball>().previousPos = GameObject.FindGameObjectWithTag("stairs2").transform.position;
+            Debug.Log(xr_p.GetComponent<XROrigin>().MoveCameraToWorldLocation(GameObject.FindGameObjectWithTag("stairs2").transform.position));
+        }else{
             coroutine = OutOfBounds(2.0f);
             StartCoroutine(coroutine);
         }
-
     }
 }

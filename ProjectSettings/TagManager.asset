@@ -20,6 +20,21 @@ TagManager:
   - Hoyo
   - Escalera
   - Pentagrama
+  - Menu
+  - Levels
+  - ClubHead
+  - GameManager
+  - BallAreaEffect
+  - ExplosionAreaEffect
+  - PickupKill
+  - PickupSpeed
+  - PickupClean
+  - Hole
+  - PickupShoot
+  - PickupRandom
+  - BlackHole
+  - DownStairs
+  - stairs2
   layers:
   - Default
   - TransparentFX

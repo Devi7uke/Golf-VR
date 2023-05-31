@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour {
 			startBallPosition = ball.transform.position;
 			sceneName = SceneManager.GetActiveScene().name;
 		}
-		if(SceneManager.GetActiveScene().name == "Scenario_3") {
+		if(SceneManager.GetActiveScene().name == "Scenario_3" || SceneManager.GetActiveScene().name == "Scenario_1" || SceneManager.GetActiveScene().name == "Scenario_2") {
 			GameObject.FindGameObjectWithTag("XROrigin").transform.parent = start.transform;
 			GameObject.FindGameObjectWithTag("XROrigin").transform.localPosition = new Vector3(0, 0, 0);
 		}
