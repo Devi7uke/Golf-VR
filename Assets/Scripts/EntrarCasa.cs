@@ -55,10 +55,10 @@ public class EntrarCasa : MonoBehaviour
 
         yield return new  WaitForSeconds(3.0f);
         video.SetActive(true);
-        xr_p.transform.SetParent(escalera.transform);
-        xr_p.transform.localPosition = new Vector3(0f, 0f, 0f);
-        Debug.Log(xr_p.GetComponent<XROrigin>().MoveCameraToWorldLocation(escalera.transform.position));
-        transform.position = new Vector3(-1.31f, 4.17f, -23.18f);
+        //xr_p.transform.SetParent(escalera.transform);
+        //xr_p.transform.localPosition = new Vector3(0f, 0f, 0f);
+        //Debug.Log(xr_p.GetComponent<XROrigin>().MoveCameraToWorldLocation(escalera.transform.position));
+        //transform.position = new Vector3(-1.31f, 4.17f, -23.18f);
     }
 
     private IEnumerator OutOfBounds(float waitTime)

@@ -49590,6 +49590,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 2369062845543864370, guid: f982917b78c1a9a428e45bd96b0861b1,
+        type: 3}
+      propertyPath: showButton.m_Reference
+      value: 
+      objectReference: {fileID: -1726797158340681769, guid: c348712bda248c246b8c49b3db54643f,
+        type: 3}
     - target: {fileID: 2369062845543864371, guid: f982917b78c1a9a428e45bd96b0861b1,
         type: 3}
       propertyPath: m_RootOrder
