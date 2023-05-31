@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 	public void Play() {
-		LoadScene.Instance.Load_Scene("Scenario_3");
+		LoadScene.Instance.Load_Scene("Scenario_1");
 		//SceneManager.LoadScene("Scenario_1");
 	}
 	public void Quit() {
@@ -67,8 +67,14 @@ public class GameManager : MonoBehaviour {
 				Application.Quit();
 		#endif
 	}
-	public void Settings() {
-
+	public void Restart() {
+		if(SceneManager.GetActiveScene().name == "Scenario_1"){
+			LoadScene.Instance.Load_Scene("Scenario_1");
+		}else if(SceneManager.GetActiveScene().name == "Scenario_2"){
+			LoadScene.Instance.Load_Scene("Scenario_2");
+		}else if(SceneManager.GetActiveScene().name == "Scenario_3"){
+			LoadScene.Instance.Load_Scene("Scenario_3");
+		}
 	}
 	public void NextLevel() {
 		if (sceneName == "Scenario_1") { 
